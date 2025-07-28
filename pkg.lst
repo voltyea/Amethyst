@@ -16,7 +16,6 @@ chafa
 clang
 cliphist
 cmake
-cmatrix-git
 cpio
 curl
 dart-sass
@@ -52,7 +51,6 @@ hyprpicker
 hyprshot
 hyprsunset-git
 imagemagick
-jmtpfs
 keyd
 kitty
 less
@@ -92,14 +90,13 @@ pango
 paru
 pavucontrol
 perl
-pipes.sh
 pipewire
 pipewire-alsa
 pipewire-jack
 pipewire-pulse
 pkg-config
 playerctl
-pokego
+pokego-bin
 polkit-kde-agent
 power-profiles-daemon
 python
@@ -141,7 +138,6 @@ wpa_supplicant
 xdg-desktop-portal-hyprland
 xdg-utils
 xf86-input-libinput
-xorg
 xorg-server
 xorg-xinit
 xorg-xwayland
