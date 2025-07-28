@@ -26,15 +26,12 @@ fd
 ffmpeg
 firefox
 fish
-flatpak
 fontconfig
 fuse
 fzf
 gcc
-gearlever
 git
 gnupg
-grimblast-git
 grub
 gst-libav
 gst-plugin-pipewire
@@ -72,7 +69,6 @@ linux-zen
 linux-zen-headers
 loupe
 lz4
-matugen-bin
 mesa
 meson
 mpv
@@ -122,8 +118,6 @@ sddm
 sh
 smartmontools
 socat
-spicetify-cli
-spotify
 stow
 tmux
 tree

@@ -133,20 +133,6 @@ sudo cp ./amethyst-cli /usr/bin
 #hyprpaper
 #cp ./hyprpaper/hyprpaper.conf $HOME/.config/hypr/hyprpaper.conf
 
-#Nyarch goodies >⩊<
-if ! flatpak list | grep -q "moe.nyarchlinux.assistant"; then
-  wget -P /tmp/ https://github.com/nyarchlinux/nyarchassistant/releases/latest/download/nyarchassistant.flatpak
-  flatpak install /tmp/nyarchassistant.flatpak
-fi
-if ! flatpak list | grep -q "moe.nyarchlinux.catgirldownloader"; then
-  wget -P /tmp/ https://github.com/nyarchlinux/catgirldownloader/releases/latest/download/catgirldownloader.flatpak
-  flatpak install /tmp/catgirldownloader.flatpak
-fi
-if ! flatpak list | grep -q "moe.nyarchlinux.waifudownloader"; then
-  wget -P /tmp/ https://github.com/nyarchlinux/waifudownloader/releases/latest/download/waifudownloader.flatpak
-  flatpak install /tmp/waifudownloader.flatpak
-fi
-
 #starting services
 sudo systemctl enable sddm.service
 sudo systemctl enable NetworkManager.service

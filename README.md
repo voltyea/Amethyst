@@ -62,8 +62,6 @@ sudo chmod +x install.sh
 
 - If you want to update your mirrorlist then just use the `update` command. This will update your official arch mirror and your chaotic aur mirrors.
 
-- If you want to setup spicetify you can run the `spicetify.sh` script to do so after logging in to Spotify.
-
 - Some HP and Lenovo laptops have an issue where the wifi gets disconnected after a few minutes, to solve this you can run the `rtw89.sh` script and - hopefully it will solve the issue.
 
 ### Gallery
