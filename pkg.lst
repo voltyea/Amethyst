@@ -82,7 +82,7 @@ noto-fonts-extra
 nwg-dock-hyprland
 nwg-drawer
 nwg-look
-oh-my-posh
+oh-my-posh-bin
 otf-font-awesome
 pacman-contrib
 pamixer
@@ -120,7 +120,6 @@ tmux
 tree
 ttf-firacode-nerd
 ttf-font-awesome
-ttf-jetbrains-mono-nerd
 unzip
 upower
 vi
