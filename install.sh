@@ -120,19 +120,6 @@ sudo chmod +x ./font.sh
 sudo chmod +x ./amethyst-cli
 sudo cp ./amethyst-cli /usr/bin
 
-#setting default gtk theme
-#cp -r ./gtk_theme/gtk-3.0/ $HOME/.config/
-#cp ./gtk_theme/.gtkrc-2.0 $HOME/
-#cp -r ./gtk_theme/nwg-look/ $HOME/.config/
-#cp -r ./gtk_theme/xsettingsd/ $HOME/.config/
-
-#setting electron flags
-#cp ./electron_flags/electron-flags.conf $HOME/.config/
-#cp ./electron_flags/spotify-flags.conf $HOME/.config/
-
-#hyprpaper
-#cp ./hyprpaper/hyprpaper.conf $HOME/.config/hypr/hyprpaper.conf
-
 #starting services
 sudo systemctl enable sddm.service
 sudo systemctl enable NetworkManager.service
