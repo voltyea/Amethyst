@@ -1,5 +1,4 @@
 ags-hyprpanel-git
-aylurs-gtk-shell-git
 base
 base-devel
 bat
@@ -49,7 +48,7 @@ hyprlock
 hyprpaper
 hyprpicker
 hyprshot
-hyprsunset-git
+hyprsunset
 imagemagick
 keyd
 kitty
@@ -126,7 +125,7 @@ vulkan-tools
 wayland
 waypaper
 wev
-wf-recorder-git
+wf-recorder
 wget
 wireless_tools
 wireplumber
