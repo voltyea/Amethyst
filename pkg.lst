@@ -118,7 +118,6 @@ stow
 tmux
 tree
 ttf-firacode-nerd
-woff2-font-awesome
 unzip
 upower
 vi
@@ -132,6 +131,7 @@ wget
 wireless_tools
 wireplumber
 wl-clipboard
+woff2-font-awesome
 wpa_supplicant
 xdg-desktop-portal-hyprland
 xdg-utils
