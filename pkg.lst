@@ -28,6 +28,7 @@ fuse
 fzf
 gcc
 git
+glaze
 gnupg
 grub
 gst-libav
@@ -43,6 +44,7 @@ gtksourceview3
 gvfs
 gvfs-mtp
 hyprland
+hyprland-protocols
 hyprlock
 hyprpaper
 hyprpicker
@@ -65,6 +67,7 @@ linux-zen
 linux-zen-headers
 loupe
 lz4
+man-db
 mesa
 meson
 mpv
@@ -141,7 +144,3 @@ yank
 yay
 yazi
 zoxide
-gstreamer
-man-db
-glaze
-hyprland-protocols
