@@ -1,4 +1,3 @@
-ags-hyprpanel-git
 base
 base-devel
 bat
@@ -142,3 +141,5 @@ yank
 yay
 yazi
 zoxide
+gstreamer
+man-db
