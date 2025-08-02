@@ -123,10 +123,11 @@ done
 git clone https://github.com/voltyea/my_wallpapers.git $HOME/wallpapers/
 git -C $HOME/wallpapers/ pull
 
-#installing sddm theme
-sudo chmod +x ./sddm.sh
-./sddm.sh
-cp dotfiles/sddm/user_face_icons/user.face.icon $HOME/.face.icon
+#Setting up touchpad tapping and user profile picture.
+sudo curl -o /usr/share/sddm/faces/$USER.face.icon https://raw.githubusercontent.com/voltyea/Amethyst/main/user_face_icons/user.face.icon
+sudo mkdir -p /etc/X11/xorg.conf.d/
+sudo curl -o /etc/X11/xorg.conf.d/30-touchpad.conf https://raw.githubusercontent.com/voltyea/Amethyst/main/30-touchpad.conf
+curl -o $HOME/.face.icon https://raw.githubusercontent.com/voltyea/Amethyst/main/user_face_icons/user.face.icon
 
 #install catppuccin cursor theme
 #copying the catppuccin-mocha mauve cursor theme, you can change it if you like.
@@ -141,9 +142,12 @@ gsettings set org.gnome.desktop.interface cursor-theme 'catppuccin-mocha-mauve-c
 #setting the flatpak theme
 flatpak override --filesystem=$HOME/.themes:ro --filesystem=$HOME/.icons:ro --user
 
-#remapping keys
-sudo chmod +x ./key.sh
-./key.sh
+#remapping keys (keyd)
+sudo systemctl enable keyd --now
+sudo mkdir -p /etc/keyd/
+sudo curl -o /etc/keyd/default.conf https://raw.githubusercontent.com/voltyea/Amethyst/main/default.conf
+sudo usermod -aG keyd $USER
+sudo usermod -aG input $USER
 
 #Applying gtk theme
 mkdir -p $HOME/.local/share/themes/
@@ -156,20 +160,20 @@ sudo flatpak override --env=GTK_THEME="catppuccin-${FLAVOR}-${ACCENT}-standard+d
 #installing nessecary fonts
 sudo mkdir -p /usr/local/share/fonts/
 
-curl -o /usr/local/share/fonts/icomoon.ttf https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/icomoon/fonts/icomoon.ttf
-curl -o "/usr/local/share/fonts/JetBrains Mono Nerd.ttf" "https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/JetBrains/JetBrains Mono Nerd.ttf"
-curl -o /usr/local/share/fonts/Midorima-PersonalUse-Regular.ttf https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/midorima/Midorima-PersonalUse-Regular.ttf
-curl -o /usr/local/share/fonts/Rusillaserif-Light.ttf https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/rusilla_serif/Rusillaserif-Light.ttf
-curl -o /usr/local/share/fonts/Rusillaserif-Regular.ttf https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/rusilla_serif/Rusillaserif-Regular.ttf
-curl -o "/usr/local/share/fonts/SF Pro Display Bold.otf" "https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/SF Pro Display/SF Pro Display Bold.otf"
-curl -o "/usr/local/share/fonts/SF Pro Display Regular.otf" "https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/SF Pro Display/SF Pro Display Regular.otf"
-curl -o /usr/local/share/fonts/StretchPro.otf https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/StretchPro/StretchPro.otf
-curl -o "/usr/local/share/fonts/Suisse Int'l Mono.ttf" "https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/Suisse Int'l Mono/Suisse Int'l Mono.ttf"
+sudo curl -o /usr/local/share/fonts/icomoon.ttf https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/icomoon/fonts/icomoon.ttf
+sudo curl -o "/usr/local/share/fonts/JetBrains Mono Nerd.ttf" "https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/JetBrains/JetBrains Mono Nerd.ttf"
+sudo curl -o /usr/local/share/fonts/Midorima-PersonalUse-Regular.ttf https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/midorima/Midorima-PersonalUse-Regular.ttf
+sudo curl -o /usr/local/share/fonts/Rusillaserif-Light.ttf https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/rusilla_serif/Rusillaserif-Light.ttf
+sudo curl -o /usr/local/share/fonts/Rusillaserif-Regular.ttf https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/rusilla_serif/Rusillaserif-Regular.ttf
+sudo curl -o "/usr/local/share/fonts/SF Pro Display Bold.otf" "https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/SF Pro Display/SF Pro Display Bold.otf"
+sudo curl -o "/usr/local/share/fonts/SF Pro Display Regular.otf" "https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/SF Pro Display/SF Pro Display Regular.otf"
+sudo curl -o /usr/local/share/fonts/StretchPro.otf https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/StretchPro/StretchPro.otf
+sudo curl -o "/usr/local/share/fonts/Suisse Int'l Mono.ttf" "https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/Suisse Int'l Mono/Suisse Int'l Mono.ttf"
 
 fc-cache -fv
 
 #rtw89 fixes
-curl -o /usr/lib/modprobe.d/70-rtw89.conf https://raw.githubusercontent.com/voltyea/Amethyst/main/70-rtw89.conf
+sudo curl -o /usr/lib/modprobe.d/70-rtw89.conf https://raw.githubusercontent.com/voltyea/Amethyst/main/70-rtw89.conf
 
 #starting services
 sudo systemctl enable sddm.service
