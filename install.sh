@@ -50,13 +50,12 @@ fi
 sudo sed -i '/^\[multilib\]/,/^\[/{s/^#\(Include = \/etc\/pacman\.d\/mirrorlist\)/\1/}' /etc/pacman.conf
 
 sudo pacman -Syu --needed rate-mirrors paru
-sudo chmod +x ./update
-sudo cp ./update /usr/bin
+sudo curl -o /usr/bin/update https://raw.githubusercontent.com/voltyea/Amethyst/main/update
 update
 update
 sudo pacman -Syu
-xargs -a ./conflict_pkg.lst paru -Syu --needed
-xargs -a ./pkg.lst paru -Syu --needed
+curl -fsSL https://raw.githubusercontent.com/voltyea/Amethyst/main/conflict_pkg.lst | xargs paru -Syu --needed
+curl -fsSL https://raw.githubusercontent.com/voltyea/Amethyst/main/pkg.lst | xargs paru -Syu --needed
 
 #cpu stuff
 vendor=$(grep -m 1 'vendor_id' /proc/cpuinfo | awk '{print $3}')
@@ -157,20 +156,20 @@ sudo flatpak override --env=GTK_THEME="catppuccin-${FLAVOR}-${ACCENT}-standard+d
 #installing nessecary fonts
 sudo mkdir -p /usr/local/share/fonts/
 
-sudo cp ./fonts/icomoon/fonts/icomoon.ttf /usr/local/share/fonts/
-sudo cp "./fonts/JetBrains/JetBrains Mono Nerd.ttf" /usr/local/share/fonts/
-sudo cp ./fonts/midorima/Midorima-PersonalUse-Regular.ttf /usr/local/share/fonts/
-sudo cp ./fonts/rusilla_serif/Rusillaserif-Light.ttf /usr/local/share/fonts/
-sudo cp ./fonts/rusilla_serif/Rusillaserif-Regular.ttf /usr/local/share/fonts/
-sudo cp "./fonts/SF Pro Display/SF Pro Display Bold.otf" /usr/local/share/fonts/
-sudo cp "./fonts/SF Pro Display/SF Pro Display Regular.otf" /usr/local/share/fonts/
-sudo cp ./fonts/StretchPro/StretchPro.otf /usr/local/share/fonts/
-sudo cp "./fonts/Suisse Int'l Mono/Suisse Int'l Mono.ttf" /usr/local/share/fonts/
+curl -o /usr/local/share/fonts/icomoon.ttf https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/icomoon/fonts/icomoon.ttf
+curl -o "/usr/local/share/fonts/JetBrains Mono Nerd.ttf" "https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/JetBrains/JetBrains Mono Nerd.ttf"
+curl -o /usr/local/share/fonts/Midorima-PersonalUse-Regular.ttf https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/midorima/Midorima-PersonalUse-Regular.ttf
+curl -o /usr/local/share/fonts/Rusillaserif-Light.ttf https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/rusilla_serif/Rusillaserif-Light.ttf
+curl -o /usr/local/share/fonts/Rusillaserif-Regular.ttf https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/rusilla_serif/Rusillaserif-Regular.ttf
+curl -o "/usr/local/share/fonts/SF Pro Display Bold.otf" "https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/SF Pro Display/SF Pro Display Bold.otf"
+curl -o "/usr/local/share/fonts/SF Pro Display Regular.otf" "https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/SF Pro Display/SF Pro Display Regular.otf"
+curl -o /usr/local/share/fonts/StretchPro.otf https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/StretchPro/StretchPro.otf
+curl -o "/usr/local/share/fonts/Suisse Int'l Mono.ttf" "https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/Suisse Int'l Mono/Suisse Int'l Mono.ttf"
 
 fc-cache -fv
 
 #rtw89 fixes
-sudo cp ./70-rtw89.conf /usr/lib/modprobe.d/70-rtw89.conf
+curl -o /usr/lib/modprobe.d/70-rtw89.conf https://raw.githubusercontent.com/voltyea/Amethyst/main/70-rtw89.conf
 
 #starting services
 sudo systemctl enable sddm.service
