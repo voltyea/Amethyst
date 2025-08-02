@@ -86,11 +86,39 @@ fi
 rustup default stable
 
 #installing dotfiles
-mkdir -p "$HOME/.local/share/amethyst/"
-git clone https://github.com/voltyea/dotfiles.git $HOME/.local/share/amethyst/dotfiles/
+mkdir -p "$HOME/.local/share/Elements/"
+git clone https://github.com/voltyea/dotfiles.git $HOME/.local/share/Elements/dotfiles/
 git -C $HOME/.local/share/amethyst/dotfiles/ pull
-rsync -a --exclude-from="$HOME/.local/share/amethyst/dotfiles/.rsyncignore" $HOME/.local/share/amethyst/dotfiles/ $HOME/ &&
-  stow -d "$HOME/.local/share/amethyst/dotfiles/" -t $HOME/ . --adopt
+
+set -e
+default="Anemo"
+SRC="$HOME/.local/share/Elements/$default/"
+DEST="$HOME/"
+
+if [[ -z "$SRC" || -z "$DEST" ]]; then
+  echo "Usage: $0 <source_directory> <destination_directory>"
+  exit 1
+fi
+
+if [[ ! -d "$SRC" ]]; then
+  echo "Source directory does not exist: $SRC"
+  exit 1
+fi
+
+mkdir -p "$DEST"
+
+# Traverse the source directory
+find "$SRC" -type f | while read -r file; do
+  # Compute the relative path
+  rel_path="${file#$SRC/}"
+
+  # Create the target directory structure
+  dest_dir="$(dirname "$DEST/$rel_path")"
+  mkdir -p "$dest_dir"
+
+  # Create symlink if it doesn't already exist
+  ln -sf "$file" "$DEST/$rel_path"
+done
 
 #copying wallpapers
 git clone https://github.com/voltyea/my_wallpapers.git $HOME/wallpapers/
@@ -100,25 +128,49 @@ git -C $HOME/wallpapers/ pull
 sudo chmod +x ./sddm.sh
 ./sddm.sh
 cp dotfiles/sddm/user_face_icons/user.face.icon $HOME/.face.icon
+
 #install catppuccin cursor theme
-sudo chmod +x ./cursor.sh
-./cursor.sh
+#copying the catppuccin-mocha mauve cursor theme, you can change it if you like.
+cp -r /usr/share/icons/catppuccin-mocha-mauve-cursors/ $HOME/.local/share/icons/
+cp -r /usr/share/icons/catppuccin-mocha-mauve-cursors/ $HOME/.icons/
+sudo cp -r /usr/share/icons/catppuccin-mocha-mauve-cursors/ /usr/share/themes/
+cp -r /usr/share/icons/catppuccin-mocha-mauve-cursors/ $HOME/.themes/
+
+#setting the gtk xcursor theme
+gsettings set org.gnome.desktop.interface cursor-theme 'catppuccin-mocha-mauve-cursors'
+
+#setting the flatpak theme
+flatpak override --filesystem=$HOME/.themes:ro --filesystem=$HOME/.icons:ro --user
 
 #remapping keys
 sudo chmod +x ./key.sh
 ./key.sh
 
 #Applying gtk theme
-sudo chmod +x ./gtk.sh
-./gtk.sh
+mkdir -p $HOME/.local/share/themes/
+cp -r /usr/share/themes/. $HOME/.local/share/themes/
+sudo flatpak override --filesystem=$HOME/.local/share/themes
+FLAVOR="mocha"
+ACCENT="mauve"
+sudo flatpak override --env=GTK_THEME="catppuccin-${FLAVOR}-${ACCENT}-standard+default"
 
 #installing nessecary fonts
-sudo chmod +x ./font.sh
-./font.sh
+sudo mkdir -p /usr/local/share/fonts/
 
-#installing the amethyst-cli script. Usage- just type "amethyst-cli"
-sudo chmod +x ./amethyst-cli
-sudo cp ./amethyst-cli /usr/bin
+sudo cp ./fonts/icomoon/fonts/icomoon.ttf /usr/local/share/fonts/
+sudo cp "./fonts/JetBrains/JetBrains Mono Nerd.ttf" /usr/local/share/fonts/
+sudo cp ./fonts/midorima/Midorima-PersonalUse-Regular.ttf /usr/local/share/fonts/
+sudo cp ./fonts/rusilla_serif/Rusillaserif-Light.ttf /usr/local/share/fonts/
+sudo cp ./fonts/rusilla_serif/Rusillaserif-Regular.ttf /usr/local/share/fonts/
+sudo cp "./fonts/SF Pro Display/SF Pro Display Bold.otf" /usr/local/share/fonts/
+sudo cp "./fonts/SF Pro Display/SF Pro Display Regular.otf" /usr/local/share/fonts/
+sudo cp ./fonts/StretchPro/StretchPro.otf /usr/local/share/fonts/
+sudo cp "./fonts/Suisse Int'l Mono/Suisse Int'l Mono.ttf" /usr/local/share/fonts/
+
+fc-cache -fv
+
+#rtw89 fixes
+sudo cp ./70-rtw89.conf /usr/lib/modprobe.d/70-rtw89.conf
 
 #starting services
 sudo systemctl enable sddm.service
