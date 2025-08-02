@@ -31,6 +31,7 @@ gcc
 git
 glaze
 gnupg
+grimblast-git
 grub
 gst-libav
 gst-plugin-pipewire
@@ -49,7 +50,6 @@ hyprland-protocols
 hyprlock
 hyprpaper
 hyprpicker
-hyprshot
 hyprsunset
 imagemagick
 keyd

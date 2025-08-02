@@ -13,9 +13,10 @@
 | <kbd>SUPER</kbd> + <kbd>X</kbd>                      | color picker                    |
 | <kbd>SUPER</kbd> + <kbd>L</kbd>                      | Lock screen                     |
 | <kbd>SUPER</kbd> + <kbd>G</kbd>                      | Game Mode                       |
-| <kbd>SUPER</kbd> + <kbd>PrtSc</kbd>                  | Screenshot a window             |
-| <kbd>PrtSc</kbd>                                     | Screenshot a monitor            |
-| <kbd>Shift</kbd> + <kbd>PrtSc</kbd>                  | Screenshot a region             |
+| <kbd>SUPER</kbd> + <kbd>A</kbd>                      | Screenshot current monitor      |
+| <kbd>SUPER</kbd> + <kbd>Alt</kbd> + <kbd>A</kbd>     | Screenshot current window       |
+| <kbd>SUPER</kbd> + <kbd>Ctrl</kbd> + <kbd>A</kbd>    | Screenshot all monitors         |
+| <kbd>SUPER</kbd> + <kbd>Shift</kbd> + <kbd>A</kbd>   | Screenshot a region             |
 
 ### Move focus window
 
