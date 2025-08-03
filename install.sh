@@ -1,18 +1,18 @@
 #!/bin/bash
 
+set -e
+
 rfkill unblock wlan
 rfkill unblock bluetooth
 
 # adding chaotic-aur
 if [ ! -f /etc/pacman.d/chaotic-mirrorlist ]; then
 
-  {
-    sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
-    sudo pacman-key --lsign-key 3056513887B78AEB
+  sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
+  sudo pacman-key --lsign-key 3056513887B78AEB
 
-    sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst'
-    sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
-  } || { exit 1; }
+  sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst'
+  sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
 
   if ! grep -qF "[chaotic-aur]" /etc/pacman.conf; then
     echo -e "\n\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist" | sudo tee -a /etc/pacman.conf
@@ -88,19 +88,12 @@ rustup default stable
 git clone https://github.com/voltyea/dotfiles.git $HOME/.local/share/Elements/
 git -C $HOME/.local/share/Elements/ pull
 default="Anemo"
-SRC="$HOME/.local/share/Elements/dotfiles/$default/"
-DEST="$HOME/"
-find "$SRC" -type f | while read -r file; do
-  rel_path="${file#$SRC/}"
-  dest_dir="$(dirname "$DEST/$rel_path")"
-  mkdir -p "$dest_dir"
-  ln -sf "$file" "$DEST/$rel_path"
-done
+cp -r $HOME/.local/share/Elements/dotfiles/$default/ $HOME/
 
 #setting up sddm theme
 sudo mkdir -p /etc/sddm.conf.d/
-sudo cp $HOME/.local/share/amethyst/sddm/Anemo/sddm.conf /etc/sddm.conf.d/
-sudo cp -r $HOME/.local/share/amethyst/sddm/Anemo/Anemo/ /usr/share/sddm/themes/
+sudo cp $HOME/.local/share/Elements/sddm/$default/sddm.conf /etc/sddm.conf.d/
+sudo cp -r $HOME/.local/share/Elements/sddm/$default/$default/ /usr/share/sddm/themes/
 
 #Copying Wallpapers
 git clone https://github.com/voltyea/Wallpapers.git $HOME/Wallpapers/
