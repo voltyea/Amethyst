@@ -17,9 +17,9 @@
 <div align="center">
 
 <br>
-  <a href="https://github.com/voltyea/Amethyst/KEYBINDS.md"><kbd> <br> Keybinds <br> </kbd></a>&ensp;&ensp;
-  <a href="https://github.com/voltyea/dotfiles/"><kbd> <br> Dotfiles <br> </kbd></a>&ensp;&ensp;
-  <a href="https://github.com/voltyea/my_wallpapers/"><kbd> <br> Wallpapers <br> </kbd></a>&ensp;&ensp;
+  <a href="https://github.com/voltyea/Amethyst/blob/main/KEYBINDS.md"><kbd> <br> Keybinds <br> </kbd></a>&ensp;&ensp;
+  <a href="https://github.com/voltyea/dotfiles.git"><kbd> <br> Dotfiles <br> </kbd></a>&ensp;&ensp;
+  <a href="https://github.com/voltyea/my_wallpapers.git"><kbd> <br> Wallpapers <br> </kbd></a>&ensp;&ensp;
 </div><br>
 
 <div align="center">
