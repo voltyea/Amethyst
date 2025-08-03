@@ -139,14 +139,14 @@ sudo flatpak override --env=GTK_THEME="catppuccin-${FLAVOR}-${ACCENT}-standard+d
 sudo mkdir -p /usr/local/share/fonts/
 
 sudo curl -o /usr/local/share/fonts/icomoon.ttf https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/icomoon/fonts/icomoon.ttf
-sudo curl -o "/usr/local/share/fonts/JetBrains Mono Nerd.ttf" "https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/JetBrains/JetBrains Mono Nerd.ttf"
+sudo curl -o "/usr/local/share/fonts/JetBrains Mono Nerd.ttf" "https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/JetBrains/JetBrains%20Mono%20Nerd.ttf"
 sudo curl -o /usr/local/share/fonts/Midorima-PersonalUse-Regular.ttf https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/midorima/Midorima-PersonalUse-Regular.ttf
 sudo curl -o /usr/local/share/fonts/Rusillaserif-Light.ttf https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/rusilla_serif/Rusillaserif-Light.ttf
 sudo curl -o /usr/local/share/fonts/Rusillaserif-Regular.ttf https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/rusilla_serif/Rusillaserif-Regular.ttf
-sudo curl -o "/usr/local/share/fonts/SF Pro Display Bold.otf" "https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/SF Pro Display/SF Pro Display Bold.otf"
-sudo curl -o "/usr/local/share/fonts/SF Pro Display Regular.otf" "https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/SF Pro Display/SF Pro Display Regular.otf"
+sudo curl -o "/usr/local/share/fonts/SF Pro Display Bold.otf" "https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/SF Pro Display/SF%20Pro%20Display%20Bold.otf"
+sudo curl -o "/usr/local/share/fonts/SF Pro Display Regular.otf" "https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/SF Pro Display/SF%20Pro%20Display%20Regular.otf"
 sudo curl -o /usr/local/share/fonts/StretchPro.otf https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/StretchPro/StretchPro.otf
-sudo curl -o "/usr/local/share/fonts/Suisse Int'l Mono.ttf" "https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/Suisse Int'l Mono/Suisse Int'l Mono.ttf"
+sudo curl -o "/usr/local/share/fonts/Suisse Int'l Mono.ttf" "https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/Suisse%20Int'l%20Mono/Suisse%20Int'l%20Mono.ttf"
 
 fc-cache -fv
 
