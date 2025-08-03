@@ -50,8 +50,8 @@ fi
 sudo sed -i '/^\[multilib\]/,/^\[/{s/^#\(Include = \/etc\/pacman\.d\/mirrorlist\)/\1/}' /etc/pacman.conf
 
 sudo pacman -Syu --needed rate-mirrors paru
-curl -o /tmp/update https://raw.githubusercontent.com/voltyea/Amethyst/main/update
-sudo cp /tmp/update /usr/bin/
+sudo curl -o /usr/bin/update https://raw.githubusercontent.com/voltyea/Amethyst/main/update
+sudo chmod +x /usr/bin/update
 update
 update
 sudo pacman -Syu
