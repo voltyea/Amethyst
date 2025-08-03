@@ -16,6 +16,14 @@
 
 <div align="center">
 
+<br>
+  <a href="https://github.com/voltyea/Amethyst/KEYBINDS.md"><kbd> <br> Keybinds <br> </kbd></a>&ensp;&ensp;
+  <a href="https://github.com/voltyea/dotfiles/"><kbd> <br> Dotfiles <br> </kbd></a>&ensp;&ensp;
+  <a href="https://github.com/voltyea/my_wallpapers/"><kbd> <br> Wallpapers <br> </kbd></a>&ensp;&ensp;
+</div><br>
+
+<div align="center">
+
 https://github.com/user-attachments/assets/f6a3002f-5206-4d80-ad00-862645482c47
 
 </div>
