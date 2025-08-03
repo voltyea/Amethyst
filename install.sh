@@ -90,7 +90,7 @@ git -C $HOME/.local/share/Elements/ pull
 
 set -e
 default="Anemo"
-SRC="$HOME/.local/share/Elements/$default/"
+SRC="$HOME/.local/share/Elements/dotfiles/$default/"
 DEST="$HOME/"
 
 if [[ -z "$SRC" || -z "$DEST" ]]; then
