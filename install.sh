@@ -87,36 +87,20 @@ rustup default stable
 #installing dotfiles
 git clone https://github.com/voltyea/dotfiles.git $HOME/.local/share/Elements/
 git -C $HOME/.local/share/Elements/ pull
-
-set -e
 default="Anemo"
 SRC="$HOME/.local/share/Elements/dotfiles/$default/"
 DEST="$HOME/"
-
-if [[ -z "$SRC" || -z "$DEST" ]]; then
-  echo "Usage: $0 <source_directory> <destination_directory>"
-  exit 1
-fi
-
-if [[ ! -d "$SRC" ]]; then
-  echo "Source directory does not exist: $SRC"
-  exit 1
-fi
-
-mkdir -p "$DEST"
-
-# Traverse the source directory
 find "$SRC" -type f | while read -r file; do
-  # Compute the relative path
   rel_path="${file#$SRC/}"
-
-  # Create the target directory structure
   dest_dir="$(dirname "$DEST/$rel_path")"
   mkdir -p "$dest_dir"
-
-  # Create symlink if it doesn't already exist
   ln -sf "$file" "$DEST/$rel_path"
 done
+
+#setting up sddm theme
+sudo mkdir -p /etc/sddm.conf.d/
+sudo cp $HOME/.local/share/amethyst/sddm/Anemo/sddm.conf /etc/sddm.conf.d/
+sudo cp -r $HOME/.local/share/amethyst/sddm/Anemo/Anemo/ /usr/share/sddm/themes/
 
 #Copying Wallpapers
 git clone https://github.com/voltyea/Wallpapers.git $HOME/Wallpapers/
