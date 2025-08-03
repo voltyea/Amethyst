@@ -55,8 +55,8 @@ sudo chmod +x /usr/bin/update
 update
 update
 sudo pacman -Syu
-curl -fsSL https://raw.githubusercontent.com/voltyea/Amethyst/main/conflict_pkg.lst | paru -Syu --needed -
-curl -fsSL https://raw.githubusercontent.com/voltyea/Amethyst/main/pkg.lst | paru -Syu --needed -
+curl -o /tmp/conflict_pkg.lst https://raw.githubusercontent.com/voltyea/Amethyst/main/conflict_pkg.lst
+curl -o /tmp/pkg.lst https://raw.githubusercontent.com/voltyea/Amethyst/main/pkg.lst
 
 #cpu stuff
 vendor=$(grep -m 1 'vendor_id' /proc/cpuinfo | awk '{print $3}')
