@@ -90,7 +90,7 @@ rustup default stable
 git clone https://github.com/voltyea/dotfiles.git $HOME/.local/share/Elements/
 git -C $HOME/.local/share/Elements/ pull
 default="Anemo"
-cp -r $HOME/.local/share/Elements/dotfiles/$default/ $HOME/
+cp -r $HOME/.local/share/Elements/dotfiles/$default/. $HOME/
 
 #setting up sddm theme
 sudo mkdir -p /etc/sddm.conf.d/
