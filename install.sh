@@ -85,9 +85,8 @@ fi
 rustup default stable
 
 #installing dotfiles
-mkdir -p "$HOME/.local/share/Elements/"
-git clone https://github.com/voltyea/dotfiles.git $HOME/.local/share/Elements/dotfiles/
-git -C $HOME/.local/share/amethyst/dotfiles/ pull
+git clone https://github.com/voltyea/dotfiles.git $HOME/.local/share/Elements/
+git -C $HOME/.local/share/Elements/ pull
 
 set -e
 default="Anemo"
