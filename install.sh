@@ -118,9 +118,9 @@ find "$SRC" -type f | while read -r file; do
   ln -sf "$file" "$DEST/$rel_path"
 done
 
-#copying wallpapers
-git clone https://github.com/voltyea/my_wallpapers.git $HOME/wallpapers/
-git -C $HOME/wallpapers/ pull
+#Copying Wallpapers
+git clone https://github.com/voltyea/Wallpapers.git $HOME/Wallpapers/
+git -C $HOME/Wallpapers/ pull
 
 #Setting up touchpad tapping and user profile picture.
 sudo curl -o /usr/share/sddm/faces/$USER.face.icon https://raw.githubusercontent.com/voltyea/Amethyst/main/user_face_icons/user.face.icon
