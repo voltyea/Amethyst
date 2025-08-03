@@ -1,3 +1,6 @@
+
+Double click on the screen to change the wallpaper.
+
 | Keys                                                 | Action                          |
 | :--------------------------------------------------- | :------------------------------ |
 | <kbd>SUPER</kbd> + <kbd>Enter</kbd>                  | open Terminal                   |
