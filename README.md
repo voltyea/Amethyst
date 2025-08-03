@@ -45,7 +45,7 @@ https://github.com/user-attachments/assets/f6a3002f-5206-4d80-ad00-862645482c47
 
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/voltyea/Amethyst/main/install.sh | bash
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/voltyea/Amethyst/main/install.sh)"
 ```
 
 >[!NOTE]
