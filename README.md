@@ -66,20 +66,3 @@ curl -fsSL https://raw.githubusercontent.com/voltyea/Amethyst/main/install.sh | 
 
 ---
 
-Dotfiles repo:-
-https://github.com/voltyea/dotfiles
-
-Wallpapers repo:-
-https://github.com/voltyea/my_wallpapers
-
-[Here](KEYBINDS.md) are the keybinds.
-
----
-
-Projects that inspired me:
-
-[The HyDE Project](https://github.com/HyDE-Project/HyDE/tree/master)
-
-[Jakoolit](https://github.com/JaKooLit/Hyprland-Dots)
-
-[ml4w](https://github.com/mylinuxforwork/dotfiles)
