@@ -1,18 +1,18 @@
 #!/bin/bash
 
-set -e
-
 rfkill unblock wlan
 rfkill unblock bluetooth
 
 # adding chaotic-aur
 if [ ! -f /etc/pacman.d/chaotic-mirrorlist ]; then
 
+{
   sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
   sudo pacman-key --lsign-key 3056513887B78AEB
 
   sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst'
   sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
+} || { exit 1; }
 
   if ! grep -qF "[chaotic-aur]" /etc/pacman.conf; then
     echo -e "\n\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist" | sudo tee -a /etc/pacman.conf
@@ -52,7 +52,6 @@ sudo sed -i '/^\[multilib\]/,/^\[/{s/^#\(Include = \/etc\/pacman\.d\/mirrorlist\
 sudo pacman -Syu --needed rate-mirrors paru
 sudo curl -o /usr/bin/update https://raw.githubusercontent.com/voltyea/Amethyst/main/update
 sudo chmod +x /usr/bin/update
-update
 update
 sudo pacman -Syu
 curl -o /tmp/conflict_pkg.lst https://raw.githubusercontent.com/voltyea/Amethyst/main/conflict_pkg.lst
