@@ -116,7 +116,6 @@ sddm
 sh
 smartmontools
 socat
-stow
 tmux
 tree
 ttf-firacode-nerd
