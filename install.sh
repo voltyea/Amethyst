@@ -53,6 +53,7 @@ sudo pacman -Syu --needed rate-mirrors paru
 sudo curl -o /usr/bin/update https://raw.githubusercontent.com/voltyea/Amethyst/main/update
 sudo chmod +x /usr/bin/update
 update
+update
 sudo pacman -Syu
 curl -o /tmp/conflict_pkg.lst https://raw.githubusercontent.com/voltyea/Amethyst/main/conflict_pkg.lst
 xargs -a /tmp/conflict_pkg.lst paru -Syu --needed
