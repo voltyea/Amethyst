@@ -48,7 +48,6 @@ gvfs-mtp
 hyprland
 hyprland-protocols
 hyprlock
-hyprpaper
 hyprpicker
 hyprsunset
 imagemagick
@@ -116,6 +115,7 @@ sddm
 sh
 smartmontools
 socat
+swww
 tmux
 tree
 ttf-firacode-nerd
