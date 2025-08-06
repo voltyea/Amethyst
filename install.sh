@@ -88,7 +88,7 @@ fi
 rustup default stable
 
 #installing dotfiles
-git clone --depth 1 https://github.com/voltyea/dotfiles.git $HOME/.local/share/Elements/
+git clone --branch main --depth 1 --single-branch https://github.com/voltyea/dotfiles.git $HOME/.local/share/Elements/
 git -C $HOME/.local/share/Elements/ pull
 default="Anemo"
 cp -r $HOME/.local/share/Elements/dotfiles/$default/. $HOME/
@@ -99,7 +99,7 @@ sudo cp $HOME/.local/share/Elements/sddm/$default/sddm.conf /etc/sddm.conf.d/
 sudo cp -r $HOME/.local/share/Elements/sddm/$default/$default/ /usr/share/sddm/themes/
 
 #Copying Wallpapers
-git clone --depth 1 https://github.com/voltyea/Wallpapers.git $HOME/Wallpapers/
+git clone --branch main --depth 1 --single-branch https://github.com/voltyea/Wallpapers.git $HOME/Wallpapers/
 git -C $HOME/Wallpapers/ pull
 
 #Setting up touchpad tapping and user profile picture.
