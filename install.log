@@ -1,9 +1,0 @@
-[09:56:31 2025-07-24] FETCHING Version 2.40.11
-[09:56:32 2025-07-24] CREATING /home/volty/.spicetify
-[09:56:32 2025-07-24] DOWNLOADING https://github.com/spicetify/cli/releases/download/v2.40.11/spicetify-2.40.11-linux-amd64.tar.gz
-[09:56:35 2025-07-24] EXTRACTING /home/volty/.spicetify/spicetify.tar.gz
-[09:56:35 2025-07-24] SETTING EXECUTABLE PERMISSIONS TO /home/volty/.spicetify/spicetify
-[09:56:35 2025-07-24] REMOVING /home/volty/.spicetify/spicetify.tar.gz
-[09:56:35 2025-07-24] APPENDING /home/volty/.spicetify to PATH in /home/volty/.config/fish/config.fish
-[09:56:35 2025-07-24] spicetify v2.40.11 was installed successfully to /home/volty/.spicetify
-[09:56:35 2025-07-24] Run 'spicetify --help' to get started
