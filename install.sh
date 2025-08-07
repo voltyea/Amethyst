@@ -121,7 +121,7 @@ gsettings set org.gnome.desktop.interface gtk-theme 'catppuccin-mocha-mauve-stan
 gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 gsettings set org.gnome.desktop.interface font-hinting 'full'
 gsettings set org.gnome.desktop.interface font-antialiasing 'rgba'
-gsettings set org.gnome.desktop.interface font-name 'Segoe UI 11'
+gsettings set org.gnome.desktop.interface font-name 'Segoe UI Variable Static Display Regular 11'
 
 #setting the flatpak theme
 flatpak override --filesystem=$HOME/.themes:ro --filesystem=$HOME/.icons:ro --user
@@ -153,7 +153,6 @@ sudo curl -o "/usr/local/share/fonts/SF Pro Display Bold.otf" "https://raw.githu
 sudo curl -o "/usr/local/share/fonts/SF Pro Display Regular.otf" "https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/SF%20Pro%20Display/SF%20Pro%20Display%20Regular.otf"
 sudo curl -o /usr/local/share/fonts/StretchPro.otf https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/StretchPro/StretchPro.otf
 sudo curl -o "/usr/local/share/fonts/Suisse Int'l Mono.ttf" "https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/Suisse%20Int'l%20Mono/Suisse%20Int'l%20Mono.ttf"
-sudo curl -o "/usr/local/share/fonts/Segoe UI.ttf" "https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/segoe-ui-4-cufonfonts/Segoe%20UI.ttf"
 
 fc-cache -fv
 
