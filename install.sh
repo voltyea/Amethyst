@@ -88,7 +88,7 @@ fi
 rustup default stable
 
 #installing dotfiles
-git clone --branch main --depth 1 --single-branch https://github.com/voltyea/dotfiles.git $HOME/.local/share/Elements/
+git clone --branch testing --depth 1 --single-branch https://github.com/voltyea/dotfiles.git $HOME/.local/share/Elements/
 git -C $HOME/.local/share/Elements/ pull
 default="Anemo"
 cp -r $HOME/.local/share/Elements/dotfiles/$default/. $HOME/
