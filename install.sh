@@ -121,7 +121,7 @@ gsettings set org.gnome.desktop.interface gtk-theme 'catppuccin-mocha-mauve-stan
 gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 gsettings set org.gnome.desktop.interface font-hinting 'full'
 gsettings set org.gnome.desktop.interface font-antialiasing 'rgba'
-gsettings set org.gnome.desktop.interface font-name 'Segoe UI'
+gsettings set org.gnome.desktop.interface font-name 'Segoe UI 11'
 
 #setting the flatpak theme
 flatpak override --filesystem=$HOME/.themes:ro --filesystem=$HOME/.icons:ro --user
