@@ -144,7 +144,7 @@ sudo flatpak override --env=GTK_THEME="catppuccin-${FLAVOR}-${ACCENT}-standard+d
 #installing nessecary fonts
 sudo mkdir -p /usr/local/share/fonts/
 
-sudo curl -o /usr/local/share/fonts/icomoon.ttf https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/icomoon/fonts/icomoon.ttf
+sudo curl -o /usr/local/share/fonts/Elements.ttf https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/Elements/Elements.ttf
 sudo curl -o "/usr/local/share/fonts/JetBrains Mono Nerd.ttf" "https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/JetBrains/JetBrains%20Mono%20Nerd.ttf"
 sudo curl -o /usr/local/share/fonts/Midorima-PersonalUse-Regular.ttf https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/midorima/Midorima-PersonalUse-Regular.ttf
 sudo curl -o /usr/local/share/fonts/Rusillaserif-Light.ttf https://raw.githubusercontent.com/voltyea/Amethyst/main/fonts/rusilla_serif/Rusillaserif-Light.ttf

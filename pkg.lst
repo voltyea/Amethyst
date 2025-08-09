@@ -134,6 +134,7 @@ wget
 wireless_tools
 wireplumber
 wl-clipboard
+woff2
 woff2-font-awesome
 wpa_supplicant
 xdg-desktop-portal-hyprland
@@ -145,4 +146,5 @@ xorg-xwayland
 yank
 yay
 yazi
+zip
 zoxide
