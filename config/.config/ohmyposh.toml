@@ -1,0 +1,79 @@
+version = 3
+final_space = true
+
+[[blocks]]
+  type = 'prompt'
+  alignment = 'left'
+  newline = true  
+
+  [[blocks.segments]]
+    template = '🌸{{ .UserName }}'
+    foreground = '#000000'
+    powerline_symbol = ''
+    leading_diamond = ''
+    background = '#6333AE'
+    type = 'session'
+    style = 'diamond'
+
+  [[blocks.segments]]
+    template = ' {{ .Path }}'
+    foreground = '#000000'
+    powerline_symbol = ''
+    background = '#AA7EEE'
+    type = 'path'
+    style = 'powerline'
+
+    [blocks.segments.properties]
+      home_icon = '~'
+      style = 'agnoster_full'
+
+  [[blocks.segments]]
+    template = ' {{ .HEAD }}'
+    foreground = '#000000'
+    powerline_symbol = ''
+    background = '#BB9DED'
+    type = 'git'
+    style = 'powerline'
+
+    [blocks.segments.properties]
+      branch_icon = ' '
+      cherry_pick_icon = ' '
+      commit_icon = ' '
+      fetch_status = false
+      fetch_upstream_icon = false
+      merge_icon = ' '
+      no_commits_icon = ' '
+      rebase_icon = ' '
+      revert_icon = ' '
+      tag_icon = ' '
+
+[[blocks.segments]]
+    template = ' 🗲'
+    foreground_templates = [
+      "{{if gt .Code 0}}#f38ba8{{end}}",
+      "{{if eq .Code 0}}#BB9AF0{{end}}",
+    ]
+    type = 'text'
+    style = 'plain'
+
+[transient_prompt]
+foreground_templates = [
+      "{{if gt .Code 0}}#f38ba8{{end}}",
+      "{{if eq .Code 0}}#BB9AF0{{end}}",
+]
+
+template = '🗲 '
+
+[[blocks]]
+  type = "rprompt"
+  alignment = 'right'
+
+[[blocks.segments]]
+type = "executiontime"
+template = "{{ .FormattedMs }} "
+
+[blocks.segments.properties]
+threshold = 0
+style = "austin"
+always_enabled = true
+
