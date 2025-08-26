@@ -105,7 +105,7 @@ git -C $HOME/Wallpapers/ pull
 #Setting up touchpad tapping and user profile picture.
 sudo curl -o /usr/share/sddm/faces/$USER.face.icon https://raw.githubusercontent.com/voltyea/Amethyst/main/user_face_icons/user.face.icon
 sudo mkdir -p /etc/X11/xorg.conf.d/
-sudo curl -o /etc/X11/xorg.conf.d/30-touchpad.conf https://raw.githubusercontent.com/voltyea/Amethyst/main/30-touchpad.conf
+sudo curl -o /etc/X11/xorg.conf.d/30-touchpad.conf https://raw.githubusercontent.com/voltyea/Amethyst/main/misc/30-touchpad.conf
 curl -o $HOME/.face.icon https://raw.githubusercontent.com/voltyea/Amethyst/main/user_face_icons/user.face.icon
 
 #install catppuccin cursor theme
@@ -129,7 +129,7 @@ flatpak override --filesystem=$HOME/.themes:ro --filesystem=$HOME/.icons:ro --us
 #remapping keys (keyd)
 sudo systemctl enable keyd --now
 sudo mkdir -p /etc/keyd/
-sudo curl -o /etc/keyd/default.conf https://raw.githubusercontent.com/voltyea/Amethyst/main/default.conf
+sudo curl -o /etc/keyd/default.conf https://raw.githubusercontent.com/voltyea/Amethyst/main/misc/default.conf
 sudo usermod -aG keyd $USER
 sudo usermod -aG input $USER
 
@@ -157,7 +157,7 @@ sudo curl -o "/usr/local/share/fonts/Suisse Int'l Mono.ttf" "https://raw.githubu
 fc-cache -fv
 
 #rtw89 fixes
-sudo curl -o /usr/lib/modprobe.d/70-rtw89.conf https://raw.githubusercontent.com/voltyea/Amethyst/main/70-rtw89.conf
+sudo curl -o /usr/lib/modprobe.d/70-rtw89.conf https://raw.githubusercontent.com/voltyea/Amethyst/main/misc/70-rtw89.conf
 
 #starting services
 sudo systemctl enable sddm.service
