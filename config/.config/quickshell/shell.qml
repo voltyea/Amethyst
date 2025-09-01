@@ -5,6 +5,7 @@ import QtQuick
 import Quickshell.Hyprland
 import Quickshell.Wayland
 import QtCharts
+import QtQml
 import Quickshell.Io
 import Quickshell.Services.UPower
 import QtQuick.Layouts
@@ -35,7 +36,6 @@ Variants {
       exclusionMode: ExclusionMode.Ignore
       aboveWindows: false
       color: "transparent"
-
       Image {
         asynchronous: true
         source: `file://${Quickshell.env("HOME")}/.current_wallpaper`
@@ -44,7 +44,6 @@ Variants {
         smooth: true
         cache: false
       }
-
       Text {
         antialiasing: true
         anchors {
@@ -59,8 +58,6 @@ Variants {
         color: "#3e9f85"
         text: Time.day
       }
-
-
       PanelWindow {
         id: exclusiveZone
         implicitHeight: 30
@@ -80,9 +77,18 @@ Variants {
           bottom: 0
         }
       }
-
       PanelWindow {
         id: topLayer
+        property bool isOpen: false
+        signal isOpenFalse()
+        onIsOpenChanged: {
+          if (!isOpen)
+          topLayer.isOpenFalse()
+        }
+        MouseArea {
+          anchors.fill: parent
+          onClicked: topLayer.isOpen = false
+        }
         anchors {
           top: true
           bottom: true
@@ -99,12 +105,13 @@ Variants {
         exclusionMode: ExclusionMode.Ignore
         aboveWindows: true
         color: "transparent"
-        mask: Region {
+        Region {
+          id: mainRegion
           shape: RegionShape.Rect
           item: bar
           intersection: Intersection.Combine
         }
-
+        mask: !topLayer.isOpen ? mainRegion : null
         Rectangle {
           id: bar
           anchors.top: parent.top
@@ -112,7 +119,6 @@ Variants {
           height: exclusiveZone.height
           width: exclusiveZone.width
           color: "transparent"
-
           Rectangle {
             id: logo
             anchors {
@@ -134,7 +140,6 @@ Variants {
               color: "#e8dcbf"
             }
           }
-
           Rectangle {
             id: workspaces
             anchors {
@@ -178,17 +183,21 @@ Variants {
               }
             }
           }
-
           Rectangle {
             id: powerButton
             property bool beingHover: false
             property bool isVisible: false
+            signal isVisibleFalse()
+            onIsVisibleChanged: {
+              if (!isVisible)
+              powerButton.isVisibleFalse()
+            }
             anchors {
-              right: parent.right
-              verticalCenter: parent.verticalCenter
+              right: bar.right
+              verticalCenter: bar.verticalCenter
               rightMargin: 16
             }
-            height: parent.height
+            height: bar.height
             width: height
             radius: height / 2
             color: beingHover ? "#34876f" : "#3e9f85"
@@ -206,128 +215,430 @@ Variants {
               hoverEnabled: true
               onEntered: parent.beingHover = true
               onExited: parent.beingHover = false
-              onClicked: powerButton.isVisible = !powerButton.isVisible
+              onClicked: powerButton.isVisible = !powerButton.isVisible, topLayer.isOpen = true
             }
-          }
-
-
-
-
-
-
-        }
-
-        Rectangle {
-          id: powerMenu
-          anchors.right: bar.right
-          anchors.top: bar.bottom
-          height: 100
-          width: 150
-          visible: powerButton.isVisible
-          color: "#24574b"
-          radius: 10
-
-          Column {
-            anchors.fill: parent
-            anchors.margins: 6
-            spacing: 4
-            visible: parent.opacity > 0
-
-            Rectangle {
-              height: 28; width: parent.width
-              radius: 6
-              color: hovered ? "#204c41" : "transparent"
-              visible: parent.visible
-              property bool hovered: false
-              Text {
-                renderType: Text.NativeRendering
-                font.hintingPreference: Font.PreferFullHinting
-                text: "Shutdown"
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.left: parent.left
-                anchors.leftMargin: 10
-                color: "#e8dcbf"
-                visible: parent.visible
-                font.family: "Segoe UI Variable Static Display"
-                font.bold: true
-                font.pointSize: 10
-              }
-              MouseArea {
-                anchors.fill: parent
-                hoverEnabled: true
-                visible: parent.visible
-                onEntered: parent.hovered = true
-                onExited: parent.hovered = false
-                onClicked: Quickshell.execDetached(["bash", "-c", "poweroff"])
+            Connections {
+              target: topLayer
+              function onIsOpenFalse() {
+                powerButton.isVisible = false
               }
             }
-
-            Rectangle {
-              height: 28; width: parent.width
-              radius: 6
-              visible: parent.visible
-              color: hovered ? "#204c41" : "transparent"
-              property bool hovered: false
-              Text {
-                renderType: Text.NativeRendering
-                font.hintingPreference: Font.PreferFullHinting
-                text: "Reboot"
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.left: parent.left
-                anchors.leftMargin: 10
-                color: "#e8dcbf"
-                visible: parent.visible
-                font.family: "Segoe UI Variable Static Display"
-                font.bold: true
-                font.pointSize: 10
-              }
-
-              MouseArea {
-                anchors.fill: parent
-                hoverEnabled: true
-                visible: parent.visible
-                onEntered: parent.hovered = true
-                onExited: parent.hovered = false
-                onClicked: Quickshell.execDetached(["bash", "-c", "reboot"])
-
-              }
-            }
-
-            Rectangle {
-              height: 28; width: parent.width
-              radius: 6
-              visible: parent.visible
-              color: hovered ? "#204c41" : "transparent"
-              property bool hovered: false
-              Text {
-                renderType: Text.NativeRendering
-                font.hintingPreference: Font.PreferFullHinting
-                text: "Sleep"
-                visible: parent.visible
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.left: parent.left
-                anchors.leftMargin: 10
-                color: "#e8dcbf"
-                font.family: "Segoe UI Variable Static Display"
-                font.bold: true
-                font.pointSize: 10
-              }
-              MouseArea {
-                anchors.fill: parent
-                hoverEnabled: true
-                visible: parent.visible
-                onEntered: parent.hovered = true
-                onExited: parent.hovered = false
-                onClicked: Quickshell.execDetached(["bash", "-c", "systemctl suspend"])
+            Connections {
+              target: powerButton
+              function onIsVisibleFalse() {
+                Qt.callLater(function() {topLayer.isOpen = false})
               }
             }
           }
+          Rectangle {
+            id: powerMenu
+            anchors.right: powerButton.right
+            anchors.top: powerButton.bottom
+            anchors.rightMargin: -3
+            anchors.topMargin: 10
+            height: 0
+            width: 150
+            color: "#24574b"
+            visible: true
+            opacity: 0
+            radius: 10
+            states: [
+              State {
+                name: "expanded"
+                when: powerButton.isVisible && topLayer.isOpen
+                PropertyChanges {
+                  target: powerMenu
+                  height: 100
+                  opacity: 1
+                }
+              },
+              State {
+                name: "collapsed"
+                when: !(powerButton.isVisible && topLayer.isOpen)
+                PropertyChanges {
+                  target: powerMenu
+                  height: 0
+                  opacity: 0
+                }
+              }
+            ]
+            transitions: [
+              Transition {
+                from: "collapsed"
+                to: "expanded"
+                reversible: true
+                ParallelAnimation {
+                  NumberAnimation { properties: "height"; duration: 250; easing.type: Easing.Linear }
+                  NumberAnimation { properties: "opacity"; duration: 150 }
+                }
+              }
+            ]
+            Column {
+              visible: powerMenu.height > 0 ? true : false
+              anchors.fill: parent
+              anchors.margins: 6
+              spacing: 4
+              Rectangle {
+                visible: powerMenu.height > 0 ? true : false
+                height: 28; width: parent.width
+                radius: 6
+                color: hovered ? "#1b473c" : "transparent"
+                property bool hovered: false
+                Text {
+                  visible: powerMenu.height > 0 ? true : false
+                  renderType: Text.NativeRendering
+                  font.hintingPreference: Font.PreferFullHinting
+                  text: "Shutdown"
+                  anchors.verticalCenter: parent.verticalCenter
+                  anchors.left: parent.left
+                  anchors.leftMargin: 10
+                  color: "#e8dcbf"
+                  font.family: "Segoe UI Variable Static Display"
+                  font.bold: true
+                  font.pointSize: 10
+                }
+                MouseArea {
+                  visible: powerMenu.height > 0 ? true : false
+                  anchors.fill: parent
+                  hoverEnabled: true
+                  onEntered: parent.hovered = true
+                  onExited: parent.hovered = false
+                  onClicked: Quickshell.execDetached(["bash", "-c", "poweroff"])
+                }
+              }
+              Rectangle {
+                visible: powerMenu.height > 0 ? true : false
+                height: 28; width: parent.width
+                radius: 6
+                color: hovered ? "#1b473c" : "transparent"
+                property bool hovered: false
+                Text {
+                  visible: powerMenu.height > 0 ? true : false
+                  renderType: Text.NativeRendering
+                  font.hintingPreference: Font.PreferFullHinting
+                  text: "Reboot"
+                  anchors.verticalCenter: parent.verticalCenter
+                  anchors.left: parent.left
+                  anchors.leftMargin: 10
+                  color: "#e8dcbf"
+                  font.family: "Segoe UI Variable Static Display"
+                  font.bold: true
+                  font.pointSize: 10
+                }
+                MouseArea {
+                  visible: powerMenu.height > 0 ? true : false
+                  anchors.fill: parent
+                  hoverEnabled: true
+                  onEntered: parent.hovered = true
+                  onExited: parent.hovered = false
+                  onClicked: Quickshell.execDetached(["bash", "-c", "reboot"])
+
+                }
+              }
+              Rectangle {
+                visible: powerMenu.height > 0 ? true : false
+                height: 28; width: parent.width
+                radius: 6
+                color: hovered ? "#1b473c" : "transparent"
+                property bool hovered: false
+                Text {
+                  visible: powerMenu.height > 0 ? true : false
+                  renderType: Text.NativeRendering
+                  font.hintingPreference: Font.PreferFullHinting
+                  text: "Sleep"
+                  anchors.verticalCenter: parent.verticalCenter
+                  anchors.left: parent.left
+                  anchors.leftMargin: 10
+                  color: "#e8dcbf"
+                  font.family: "Segoe UI Variable Static Display"
+                  font.bold: true
+                  font.pointSize: 10
+                }
+                MouseArea {
+                  visible: powerMenu.height > 0 ? true : false
+                  anchors.fill: parent
+                  hoverEnabled: true
+                  onEntered: parent.hovered = true
+                  onExited: parent.hovered = false
+                  onClicked: Quickshell.execDetached(["bash", "-c", "systemctl suspend"])
+                }
+              }
+            }
+          }
+          Rectangle {
+            id: clock
+            anchors {
+              right: powerButton.left
+              verticalCenter: bar.verticalCenter
+              rightMargin: 16
+            }
+            height: bar.height
+            width: 187
+            radius: height / 2
+            color: "#3e9f85"
+            Row {
+              anchors.horizontalCenter: parent.horizontalCenter
+              spacing: 6
+              Text {
+                renderType: Text.NativeRendering
+                font.hintingPreference: Font.PreferFullHinting
+                anchors.verticalCenter: parent.verticalCenter
+                font.family: "Segoe UI Variable Static Display"
+                font.pointSize: 13.5
+                color: "#e8dcbf"
+                text: "󰸗"
+              }
+              Text {
+                renderType: Text.NativeRendering
+                font.hintingPreference: Font.PreferFullHinting
+                anchors.verticalCenter: parent.verticalCenter
+                font.family: "Segoe UI Variable Static Display"
+                font.bold: true
+                font.pointSize: 10.2
+                color: "#e8dcbf"
+                text: Time.time
+
+              }
+            }
+          }
+          Loader {
+            id: batteryLoader
+            sourceComponent: battery
+            asynchronous: true
+            active: UPower.displayDevice.isPresent
+            anchors {
+              right: clock.left
+              verticalCenter: bar.verticalCenter
+              rightMargin: 16
+            }
+          }
+          Loader {
+            id: batteryMenuLoader
+            sourceComponent: batteryMenu
+            asynchronous: true
+            anchors.right: bar.right
+            anchors.top: bar.bottom
+            anchors.rightMargin: 225
+            anchors.topMargin: 10
+            active: UPower.displayDevice.isPresent
+          }
+          Component {
+            id: battery
+            Rectangle {
+              property bool beingHover: false
+              property bool isVisible: false
+              signal isVisibleFalse()
+              onIsVisibleChanged: {
+                if (!isVisible)
+                isVisibleFalse()
+              }
+              visible: true
+              height: bar.height
+              width: 57
+              radius: height / 2
+              color: beingHover ? "#34876f" : "#3e9f85"
+              Row {
+                anchors.centerIn: parent
+                spacing: 1.5
+                Text {
+                  renderType: Text.NativeRendering
+                  font.hintingPreference: Font.PreferFullHinting
+                  //discharging
+                  text: UPower.displayDevice.percentage >= 0.00 && UPower.displayDevice.percentage < 0.10 && UPower.displayDevice.state === 2 ? "󰂃" :
+                  UPower.displayDevice.percentage >= 0.10 && UPower.displayDevice.percentage < 0.20 && UPower.displayDevice.state === 2 ? "󰁺" :
+                  UPower.displayDevice.percentage >= 0.20 && UPower.displayDevice.percentage < 0.30 && UPower.displayDevice.state === 2 ? "󰁻" :
+                  UPower.displayDevice.percentage >= 0.30 && UPower.displayDevice.percentage < 0.40 && UPower.displayDevice.state === 2 ? "󰁼" :
+                  UPower.displayDevice.percentage >= 0.40 && UPower.displayDevice.percentage < 0.50 && UPower.displayDevice.state === 2 ? "󰁽" :
+                  UPower.displayDevice.percentage >= 0.50 && UPower.displayDevice.percentage < 0.60 && UPower.displayDevice.state === 2 ? "󰁾" :
+                  UPower.displayDevice.percentage >= 0.60 && UPower.displayDevice.percentage < 0.70 && UPower.displayDevice.state === 2 ? "󰁿" :
+                  UPower.displayDevice.percentage >= 0.70 && UPower.displayDevice.percentage < 0.80 && UPower.displayDevice.state === 2 ? "󰂀" :
+                  UPower.displayDevice.percentage >= 0.80 && UPower.displayDevice.percentage < 0.90 && UPower.displayDevice.state === 2 ? "󰂁" :
+                  UPower.displayDevice.percentage >= 0.90 && UPower.displayDevice.percentage < 1.00 && UPower.displayDevice.state === 2 ? "󰂂" :
+                  UPower.displayDevice.percentage >= 1.00 && UPower.displayDevice.state === 2 ? "󰁹" :
+                  //Charging
+                  UPower.displayDevice.percentage >= 0.00 && UPower.displayDevice.percentage < 0.10 && UPower.displayDevice.state === 1 ? "󰢟" :
+                  UPower.displayDevice.percentage >= 0.10 && UPower.displayDevice.percentage < 0.20 && UPower.displayDevice.state === 1 ? "󰢜" :
+                  UPower.displayDevice.percentage >= 0.20 && UPower.displayDevice.percentage < 0.30 && UPower.displayDevice.state === 1 ? "󰂆" :
+                  UPower.displayDevice.percentage >= 0.30 && UPower.displayDevice.percentage < 0.40 && UPower.displayDevice.state === 1 ? "󰂇" :
+                  UPower.displayDevice.percentage >= 0.40 && UPower.displayDevice.percentage < 0.50 && UPower.displayDevice.state === 1 ? "󰂈" :
+                  UPower.displayDevice.percentage >= 0.50 && UPower.displayDevice.percentage < 0.60 && UPower.displayDevice.state === 1 ? "󰢝" :
+                  UPower.displayDevice.percentage >= 0.60 && UPower.displayDevice.percentage < 0.70 && UPower.displayDevice.state === 1 ? "󰂉" :
+                  UPower.displayDevice.percentage >= 0.70 && UPower.displayDevice.percentage < 0.80 && UPower.displayDevice.state === 1 ? "󰢞" :
+                  UPower.displayDevice.percentage >= 0.80 && UPower.displayDevice.percentage < 0.90 && UPower.displayDevice.state === 1 ? "󰂊" :
+                  UPower.displayDevice.percentage >= 0.90 && UPower.displayDevice.percentage < 1.00 && UPower.displayDevice.state === 1 ? "󰂋" :
+                  UPower.displayDevice.percentage >= 1.00 && UPower.displayDevice.state === 1 ? "󰂅" : ""
+
+                  font.family: "Segoe UI Variable Static Display"
+                  font.pointSize: 13
+                  color: battery.beingHover ? "#d1c5ab" : "#e8dcbf"
+                }
+                Text {
+                  renderType: Text.NativeRendering
+                  font.hintingPreference: Font.PreferFullHinting
+                  text: (UPower.displayDevice.percentage * 100).toFixed(0) + "%"
+                  font.family: "Segoe UI Variable Static Display"
+                  font.bold: true
+                  font.pointSize: 11
+                  color: battery.beingHover ? "#d1c5ab" : "#e8dcbf"
+                }
+              }
+              MouseArea {
+                anchors.fill: parent
+                hoverEnabled: true
+                onEntered: parent.beingHover = true
+                onExited: parent.beingHover = false
+                onClicked: parent.isVisible = !parent.isVisible, topLayer.isOpen = true
+              }
+              Connections {
+                target: topLayer
+                function onIsOpenFalse() {
+                  isVisible = false
+                }
+              }
+              Connections {
+                function onIsVisibleFalse() {
+                  Qt.callLater(function() {topLayer.isOpen = false})
+                }
+              }
+            }
+          }
+          Component {
+            id: batteryMenu
+            Rectangle {
+              height: 0
+              width: 150
+              color: "#24574b"
+              visible: true
+              radius: 10
+              opacity: 0
+              states: [
+                State {
+                  name: "expanded"
+                  when: batteryLoader.item.isVisible && topLayer.isOpen
+                  PropertyChanges {
+                    target: batteryMenuLoader.item
+                    height: PowerProfiles.hasPerformanceProfile ? 100 : 75
+                    opacity: 1
+                  }
+                },
+                State {
+                  name: "collapsed"
+                  when: !(batteryLoader.item.isVisible && topLayer.isOpen)
+                  PropertyChanges {
+                    target: batteryMenuLoader.item
+                    height: 0
+                    opacity: 0
+                  }
+                }
+              ]
+              transitions: [
+                Transition {
+                  from: "collapsed"
+                  to: "expanded"
+                  reversible: true
+                  ParallelAnimation {
+                    NumberAnimation { properties: "height"; duration: 250; easing.type: Easing.Linear }
+                    NumberAnimation { properties: "opacity"; duration: 150 }
+                  }
+                }
+              ]
+              Column {
+                visible: batteryMenuLoader.item.height > 0 ? true : false
+                anchors.fill: parent
+                anchors.margins: 6
+                spacing: 4
+                Rectangle {
+                  id: performanceProfile
+                  visible: PowerProfiles.hasPerformanceProfile && batteryMenuLoader.item.height > 0 ? true : false
+                  height: 28
+                  width: parent.width
+                  radius: 6
+                  color: hovered ? "#1b473c" : "transparent"
+                  property bool hovered: false
+                  Text {
+                    visible: batteryMenuLoader.item.height > 0 ? true : false
+                    renderType: Text.NativeRendering
+                    font.hintingPreference: Font.PreferFullHinting
+                    text: "    Performance"
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: parent.left
+                    anchors.leftMargin: 10
+                    color: PowerProfiles.profile === PowerProfile.Performance ? "#3e9f85" : "#e8dcbf"
+                    font.family: "Segoe UI Variable Static Display"
+                    font.bold: true
+                    font.pointSize: 10
+                  }
+                  MouseArea {
+                    visible: batteryMenuLoader.item.height > 0 ? true : false
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    onEntered: parent.hovered = true
+                    onExited: parent.hovered = false
+                    onClicked: PowerProfiles.profile = PowerProfile.Performance
+                  }
+                }
+                Rectangle {
+                  visible: batteryMenuLoader.item.height > 0 ? true : false
+                  height: 28
+                  width: parent.width
+                  radius: 6
+                  color: hovered ? "#1b473c" : "transparent"
+                  property bool hovered: false
+                  Text {
+                    visible: batteryMenuLoader.item.height > 0 ? true : false
+                    renderType: Text.NativeRendering
+                    font.hintingPreference: Font.PreferFullHinting
+                    text: "    Balanced"
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: parent.left
+                    anchors.leftMargin: 10
+                    color: PowerProfiles.profile === PowerProfile.Balanced ? "#3e9f85" : "#e8dcbf"
+                    font.family: "Segoe UI Variable Static Display"
+                    font.bold: true
+                    font.pointSize: 10
+                  }
+                  MouseArea {
+                    visible: batteryMenuLoader.item.height > 0 ? true : false
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    onEntered: parent.hovered = true
+                    onExited: parent.hovered = false
+                    onClicked: PowerProfiles.profile = PowerProfile.Balanced
+
+                  }
+                }
+                Rectangle {
+                  visible: batteryMenuLoader.item.height > 0 ? true : false
+                  height: 28; width: parent.width
+                  radius: 6
+                  color: hovered ? "#1b473c" : "transparent"
+                  property bool hovered: false
+                  Text {
+                    visible: batteryMenuLoader.item.height > 0 ? true : false
+                    renderType: Text.NativeRendering
+                    font.hintingPreference: Font.PreferFullHinting
+                    text: "󰌪   Power Saver"
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: parent.left
+                    anchors.leftMargin: 10
+                    color: PowerProfiles.profile === PowerProfile.PowerSaver ? "#3e9f85" : "#e8dcbf"
+                    font.family: "Segoe UI Variable Static Display"
+                    font.bold: true
+                    font.pointSize: 10
+                  }
+                  MouseArea {
+                    visible: batteryMenuLoader.item.height > 0 ? true : false
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    onEntered: parent.hovered = true
+                    onExited: parent.hovered = false
+                    onClicked: PowerProfiles.profile = PowerProfile.PowerSaver
+                  }
+                }
+              }
+            }
+          }
         }
-
-
-
-
-
       }
     }
   }
