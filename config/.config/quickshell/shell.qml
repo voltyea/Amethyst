@@ -6,12 +6,15 @@ import Quickshell.Hyprland
 import Quickshell.Wayland
 import QtCharts
 import QtQml
+import QtQuick.Effects
+import Qt5Compat.GraphicalEffects
 import Quickshell.Io
 import Quickshell.Services.UPower
 import QtQuick.Layouts
 import QtQuick.Shapes
 import QtQuick.Controls
 import Qt.labs.folderlistmodel
+import Quickshell.Bluetooth
 
 Variants {
   model: Quickshell.screens
@@ -42,7 +45,7 @@ Variants {
         fillMode: Image.PreserveAspectCrop
         anchors.fill: parent
         smooth: true
-        cache: false
+        cache: true
       }
       Text {
         antialiasing: true
@@ -285,13 +288,14 @@ Variants {
                 color: hovered ? "#1b473c" : "transparent"
                 property bool hovered: false
                 Text {
-                  visible: powerMenu.height > 0 ? true : false
+                  visible: powerMenu.height > 10 ? true : false
                   renderType: Text.NativeRendering
                   font.hintingPreference: Font.PreferFullHinting
                   text: "Shutdown"
                   anchors.verticalCenter: parent.verticalCenter
                   anchors.left: parent.left
                   anchors.leftMargin: 10
+                  opacity: powerMenu.opacity
                   color: "#e8dcbf"
                   font.family: "Segoe UI Variable Static Display"
                   font.bold: true
@@ -313,13 +317,14 @@ Variants {
                 color: hovered ? "#1b473c" : "transparent"
                 property bool hovered: false
                 Text {
-                  visible: powerMenu.height > 0 ? true : false
+                  visible: powerMenu.height > 49 ? true : false
                   renderType: Text.NativeRendering
                   font.hintingPreference: Font.PreferFullHinting
                   text: "Reboot"
                   anchors.verticalCenter: parent.verticalCenter
                   anchors.left: parent.left
                   anchors.leftMargin: 10
+                  opacity: powerMenu.opacity
                   color: "#e8dcbf"
                   font.family: "Segoe UI Variable Static Display"
                   font.bold: true
@@ -342,13 +347,14 @@ Variants {
                 color: hovered ? "#1b473c" : "transparent"
                 property bool hovered: false
                 Text {
-                  visible: powerMenu.height > 0 ? true : false
+                  visible: powerMenu.height > 89 ? true : false
                   renderType: Text.NativeRendering
                   font.hintingPreference: Font.PreferFullHinting
                   text: "Sleep"
                   anchors.verticalCenter: parent.verticalCenter
                   anchors.left: parent.left
                   anchors.leftMargin: 10
+                  opacity: powerMenu.opacity
                   color: "#e8dcbf"
                   font.family: "Segoe UI Variable Static Display"
                   font.bold: true
@@ -363,6 +369,18 @@ Variants {
                   onClicked: Quickshell.execDetached(["bash", "-c", "systemctl suspend"])
                 }
               }
+            }
+            RectangularShadow {
+              width: parent.width
+              height: parent.height
+              blur: 10
+              antialiasing: true
+              cached: true
+              z: -1
+              spread: 2
+              color: Qt.rgba(0.1098, 0.1098, 0.1098, 0.4)
+              offset: Qt.vector2d(5, 7)
+              radius: parent.radius
             }
           }
           Rectangle {
@@ -416,9 +434,9 @@ Variants {
             id: batteryMenuLoader
             sourceComponent: batteryMenu
             asynchronous: true
-            anchors.right: bar.right
-            anchors.top: bar.bottom
-            anchors.rightMargin: 225
+            anchors.right: batteryLoader.right
+            anchors.top: batteryLoader.bottom
+            anchors.rightMargin: -50
             anchors.topMargin: 10
             active: UPower.displayDevice.isPresent
           }
@@ -525,7 +543,7 @@ Variants {
                   name: "collapsed"
                   when: !(batteryLoader.item.isVisible && topLayer.isOpen)
                   PropertyChanges {
-                    target: batteryMenuLoader.item
+                    target: batteryMenuLoader
                     height: 0
                     opacity: 0
                   }
@@ -556,13 +574,14 @@ Variants {
                   color: hovered ? "#1b473c" : "transparent"
                   property bool hovered: false
                   Text {
-                    visible: batteryMenuLoader.item.height > 0 ? true : false
+                    visible: batteryMenuLoader.item.height > 10 ? true : false
                     renderType: Text.NativeRendering
                     font.hintingPreference: Font.PreferFullHinting
                     text: "    Performance"
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     anchors.leftMargin: 10
+                    opacity: batteryMenuLoader.item.opacity
                     color: PowerProfiles.profile === PowerProfile.Performance ? "#3e9f85" : "#e8dcbf"
                     font.family: "Segoe UI Variable Static Display"
                     font.bold: true
@@ -585,13 +604,14 @@ Variants {
                   color: hovered ? "#1b473c" : "transparent"
                   property bool hovered: false
                   Text {
-                    visible: batteryMenuLoader.item.height > 0 ? true : false
+                    visible: batteryMenuLoader.item.height > 49 ? true : false
                     renderType: Text.NativeRendering
                     font.hintingPreference: Font.PreferFullHinting
                     text: "    Balanced"
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     anchors.leftMargin: 10
+                    opacity: batteryMenuLoader.item.opacity
                     color: PowerProfiles.profile === PowerProfile.Balanced ? "#3e9f85" : "#e8dcbf"
                     font.family: "Segoe UI Variable Static Display"
                     font.bold: true
@@ -614,13 +634,14 @@ Variants {
                   color: hovered ? "#1b473c" : "transparent"
                   property bool hovered: false
                   Text {
-                    visible: batteryMenuLoader.item.height > 0 ? true : false
+                    visible: batteryMenuLoader.item.height > 89 ? true : false
                     renderType: Text.NativeRendering
                     font.hintingPreference: Font.PreferFullHinting
                     text: "󰌪   Power Saver"
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     anchors.leftMargin: 10
+                    opacity: batteryMenuLoader.item.opacity
                     color: PowerProfiles.profile === PowerProfile.PowerSaver ? "#3e9f85" : "#e8dcbf"
                     font.family: "Segoe UI Variable Static Display"
                     font.bold: true
@@ -636,6 +657,55 @@ Variants {
                   }
                 }
               }
+            }
+          }
+          Rectangle {
+            id: bluetooth
+            property bool beingHover: false
+            property bool isVisible: false
+            anchors {
+              right: batteryLoader.active ? batteryLoader.left : clock.left
+              verticalCenter: bar.verticalCenter
+              rightMargin: 16
+            }
+            height: bar.height
+            width: height
+            radius: height / 2
+            color: beingHover ? "#34876f" : "#3e9f85"
+            Text {
+              renderType: Text.NativeRendering
+              font.hintingPreference: Font.PreferFullHinting
+              text: "󰂯"
+              anchors.centerIn: parent
+              font.family: "Segoe UI Variable Static Display"
+              font.pointSize: 16.5
+              color: parent.beingHover ? "#d1c5ab" : "#e8dcbf"
+            }
+            MouseArea {
+              anchors.fill: parent
+              hoverEnabled: true
+              onEntered: parent.beingHover = true
+              onExited: parent.beingHover = false
+              onClicked: bluetoothMenu.visible = !bluetoothMenu.visible, topLayer.isOpen = true
+            }
+          }
+          Rectangle {
+            id: bluetoothMenu
+            visible: false
+            anchors.top: bluetooth.bottom
+            anchors.right: bluetooth.right
+            anchors.topMargin: 10
+            anchors.rightMargin: -50
+            color: "#24574b"
+            height: 400
+            width: 300
+            radius: 10
+            Rectangle {
+              anchors.right: parent.right
+              anchors.top: parent.top
+              height: 15
+              width: 35
+              radius: height / 2
             }
           }
         }
