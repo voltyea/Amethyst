@@ -370,18 +370,6 @@ Variants {
                 }
               }
             }
-            RectangularShadow {
-              width: parent.width
-              height: parent.height
-              blur: 10
-              antialiasing: true
-              cached: true
-              z: -1
-              spread: 2
-              color: Qt.rgba(0.1098, 0.1098, 0.1098, 0.4)
-              offset: Qt.vector2d(5, 7)
-              radius: parent.radius
-            }
           }
           Rectangle {
             id: clock
